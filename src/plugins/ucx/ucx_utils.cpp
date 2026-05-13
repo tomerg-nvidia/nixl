@@ -427,6 +427,10 @@ nixlUcxContext::nixlUcxContext(const std::vector<std::string> &devs,
         config.modify("RC_GDA_NUM_CHANNELS", std::to_string(num_device_channels));
     }
 
+    if (ucpVersion_ >= UCP_VERSION(1, 21)) {
+        config.modify("MAX_HCA_PER_GPU", "auto");
+    }
+
     const auto &hw_info = nixl::hwInfo::instance();
     if (hw_info.numEfaDevices != 0) {
         config.modify("ADDRESS_VERSION", "v2");
